@@ -1,0 +1,14 @@
+
+module d0_phi_analyzer = BeamSpotTest
+{
+  untracked string OutputFileName = "analyze_d0_phi.root"
+
+  PSet BSAnalyzerParameters = 
+  {
+	double MinimumPt = 2. // Gev/c
+	int32 MaximumNtracks = 1000 // disable for the moment
+	untracked string TrackCollection = "ctfWithMaterialTracks"
+  }
+  
+
+}
