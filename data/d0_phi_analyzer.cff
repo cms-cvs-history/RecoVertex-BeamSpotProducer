@@ -1,5 +1,5 @@
 
-module d0_phi_analyzer = BeamSpotTest
+module d0_phi_analyzer = BeamSpotAnalyzer
 {
   untracked string OutputFileName = "analyze_d0_phi.root"
 
