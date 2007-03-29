@@ -8,6 +8,8 @@ module d0_phi_analyzer = BeamSpotAnalyzer
 	double MinimumPt = 2. // Gev/c
 	int32 MaximumNtracks = 1000 // disable for the moment
 	untracked string TrackCollection = "ctfWithMaterialTracks"
+	bool WriteToDB = false // do not write results to DB
+
   }
   
 
