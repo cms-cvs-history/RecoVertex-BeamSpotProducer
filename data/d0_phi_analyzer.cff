@@ -10,6 +10,7 @@ module d0_phi_analyzer = BeamSpotAnalyzer
 	untracked string TrackCollection = "ctfWithMaterialTracks"
 	bool WriteToDB = false // do not write results to DB
 	bool RunAllFitters = false // run only default fitter
+	untracked double InputBeamWidth = -1. // if -1 use the value calculated by the analyzer
   }
   
 
