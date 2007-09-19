@@ -1,21 +1,2 @@
 
-  es_source = PoolDBESSource {
-         VPSet toGet = {
-             {
-                 string record = "BeamSpotObjectsRcd"
-                 string tag = "NominalCollision1"
-             }
-         }
-         untracked bool siteLocalConfig = true
-         string connect =  "frontier://CoralDev/CMS_COND_BEAMSPOT"
-         string timetype = "runtime"
-         PSet DBParameters = {
-             untracked int32 messageLevel=0
-         }
-  }
-
-
-module offlineBeamSpot = BeamSpotProducer {
-
-}
-
+include "RecoVertex/BeamSpotProducer/data/BeamSpotNominalCollision1.cfi"
