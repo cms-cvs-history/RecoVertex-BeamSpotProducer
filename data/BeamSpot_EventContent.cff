@@ -8,13 +8,13 @@ block BeamSpotFEVT = {
 #RECO content
 block BeamSpotRECO = {
   untracked vstring outputCommands = {
-        "keep *_offlineBeamSpot_*_*",
+        "keep *_offlineBeamSpot_*_*"
   }
 }
 
 #AOD content
 block BeamSpotAOD = {
   untracked vstring outputCommands = {
-        "keep *_offlineBeamSpot_*_*",
+        "keep *_offlineBeamSpot_*_*"
   }
 }
