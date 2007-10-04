@@ -6,7 +6,7 @@
                  string tag = "NominalCollision4"
              }
          }
-         untracked bool siteLocalConfig = true
+         
          string connect =  "frontier://CoralDev/CMS_COND_BEAMSPOT"
          string timetype = "runtime"
          PSet DBParameters = {
