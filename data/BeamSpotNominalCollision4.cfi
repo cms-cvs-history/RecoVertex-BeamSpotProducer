@@ -1,5 +1,5 @@
 
-  es_source = PoolDBESSource {
+  es_source BeamSpotNominal4 = PoolDBESSource {
          VPSet toGet = {
              {
                  string record = "BeamSpotObjectsRcd"
