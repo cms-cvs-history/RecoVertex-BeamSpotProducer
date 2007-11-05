@@ -7,7 +7,7 @@
              }
          }
          
-         string connect =  "frontier://CoralDev/CMS_COND_BEAMSPOT"
+         string connect =  "frontier://FrontierDev/CMS_COND_BEAMSPOT"
          string timetype = "runtime"
          PSet DBParameters = {
              untracked int32 messageLevel=0
