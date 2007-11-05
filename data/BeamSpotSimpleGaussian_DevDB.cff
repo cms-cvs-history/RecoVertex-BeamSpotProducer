@@ -1,0 +1,3 @@
+include "RecoVertex/BeamSpotProducer/data/BeamSpotSimpleGaussian.cfi"
+#module offlineBeamSpot = BeamSpotProducer {}
+
