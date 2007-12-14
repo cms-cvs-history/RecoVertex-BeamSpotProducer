@@ -1,4 +1,4 @@
 include "RecoVertex/BeamSpotProducer/data/BeamSpotSimpleGaussian.cfi"
-replace BeamSpotGaussian.connect = "frontier://Frontier/CMS_COND_17X_BEAMSPOT"
+replace BeamSpotGaussian.connect = "frontier://cms_conditions_data/CMS_COND_17X_BEAMSPOT"
 #module offlineBeamSpot = BeamSpotProducer {}
 
