@@ -1,0 +1,15 @@
+  es_source BeamSpotEarlyCollision = PoolDBESSource {
+         VPSet toGet = {
+             {
+                 string record = "BeamSpotObjectsRcd"
+                 string tag = "EarlyCollision"
+             }
+         }
+	         
+         string connect =  "frontier://FrontierDev/CMS_COND_BEAMSPOT"
+         string timetype = "runtime"
+         PSet DBParameters = {
+             untracked int32 messageLevel=0
+         }
+  }
+
