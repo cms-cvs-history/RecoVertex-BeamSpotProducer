@@ -1,0 +1,9 @@
+
+  es_source = BeamSpotFakeConditions {
+ 
+	//FileInPath xmlCalibration = "RecoVertex/BeamSpotProducer/test/BeamSpotFakeConditions.xml"
+	bool UseDummy = true
+	string BeamType = "NominalCollision"
+  }
+
+
