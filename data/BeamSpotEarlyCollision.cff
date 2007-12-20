@@ -1,21 +1,3 @@
-
-  es_source = PoolDBESSource {
-         VPSet toGet = {
-             {
-                 string record = "BeamSpotObjectsRcd"
-                 string tag = "EarlyCollision"
-             }
-         }
-	         
-         string connect =  "frontier://CoralDev/CMS_COND_BEAMSPOT"
-         string timetype = "runtime"
-         PSet DBParameters = {
-             untracked int32 messageLevel=0
-         }
-  }
-
-
-module offlineBeamSpot = BeamSpotProducer {
-
-}
+include "RecoVertex/BeamSpotProducer/data/BeamSpotEarlyCollision.cfi"
+replace BeamSpotEarlyCollision.connect = "frontier://Frontier/CMS_COND_18X_BEAMSPOT"
 
