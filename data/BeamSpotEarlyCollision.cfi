@@ -2,7 +2,7 @@
          VPSet toGet = {
              {
                  string record = "BeamSpotObjectsRcd"
-                 string tag = "EarlyCollision"
+                 string tag = "EarlyCollision_mc"
              }
          }
 	         
