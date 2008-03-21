@@ -1,3 +1,3 @@
 include "RecoVertex/BeamSpotProducer/data/BeamSpotEarlyCollision.cfi"
-replace BeamSpotEarlyCollision.connect = "frontier://Frontier/CMS_COND_18X_BEAMSPOT"
+replace BeamSpotEarlyCollision.connect = "frontier://FrontierProd/CMS_COND_20X_BEAMSPOT"
 
