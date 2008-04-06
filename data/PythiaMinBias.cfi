@@ -1,3 +1,5 @@
+include "IOMC/GeneratorInterface/data/pythiaDefault.cff"
+
 source = PythiaSource 
 { 
   untracked int32 maxEvents = 0
@@ -18,8 +20,7 @@ source = PythiaSource
 
     # Default (mostly empty - to keep PYTHIA default) card file
     # Name of the set is "pythiaDefault"
-    include "IOMC/GeneratorInterface/data/pythiaDefault.cff"
-
+    using pythiaDefaultBlock
 
     vstring pythiaMinBias = {
       'MSEL=1         ! select all processes (aka Min Bias)',
