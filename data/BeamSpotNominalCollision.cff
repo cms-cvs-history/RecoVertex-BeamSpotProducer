@@ -1,3 +1,0 @@
-
-include "RecoVertex/BeamSpotProducer/data/BeamSpotNominalCollision.cfi"
-replace BeamSpotNominal.connect = "frontier://FrontierProd/CMS_COND_20X_BEAMSPOT"
