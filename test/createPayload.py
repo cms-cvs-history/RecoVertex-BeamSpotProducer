@@ -21,7 +21,7 @@ def main():
 
     if len(sys.argv) < 2:
 	print "\n [usage] createPayload <beamspot file> <tag name> <IOV since> <IOV till=-1=inf> <IOV comment> <destDB=oracle://cms_orcon_prod/CMS_COND_31X_BEAMSPOT>"
-	print " e.g. createPayload BeamFitResults_template.txt BeamSpotObjects_2009_v1_express 122745 -1 \"beam spot for early collisions\" \"oracle://cms_orcon_prod/CMS_COND_31X_BEAMSPOT\"\n"
+	print " e.g. createPayload BeamFitResults_template.txt BeamSpotObjects_2009_v1_express 122745 \"\" \"beam spot for early collisions\" \"oracle://cms_orcon_prod/CMS_COND_31X_BEAMSPOT\"\n"
 	sys.exit()
 
     beam_file = sys.argv[1]
@@ -34,6 +34,8 @@ def main():
         iov_since = sys.argv[3]
     if len(sys.argv) > 4:
         iov_till = sys.argv[4]
+        if sys.argv == "-1":
+            iov_till = ""
     if len(sys.argv) > 5:
         iov_comment = sys.argv[5]
 
