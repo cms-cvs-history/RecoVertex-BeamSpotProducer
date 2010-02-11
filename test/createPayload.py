@@ -34,11 +34,13 @@ def main():
         iov_since = sys.argv[3]
     if len(sys.argv) > 4:
         iov_till = sys.argv[4]
-        if sys.argv == "-1":
+        if sys.argv[4] == "-1":
             iov_till = ""
     if len(sys.argv) > 5:
         iov_comment = sys.argv[5]
-
+    if len(sys.argv) > 6:
+        destDB = sys.argv[6]
+    
     writedb_template = "write2DB_template.py"
     readdb_template = "readDB_template.py"
     sqlite_file = "sqlite_file:"+ tagname +".db"
