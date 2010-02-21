@@ -6,7 +6,7 @@
 
  author: Francisco Yumiceva, Fermilab (yumiceva@fnal.gov)
 
- version $Id: BeamSpotFromDB.cc,v 1.1 2007/03/30 18:46:57 yumiceva Exp $
+ version $Id: BeamSpotFromDB.cc,v 1.2 2009/12/18 20:45:08 wmtan Exp $
 
 ________________________________________________________________**/
 
@@ -53,7 +53,7 @@ BeamSpotFromDB::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 }
 
 void
-BeamSpotFromDB::beginJob(const edm::EventSetup&)
+BeamSpotFromDB::beginJob()
 {
 }
 
@@ -62,4 +62,4 @@ BeamSpotFromDB::endJob() {
 }
 
 //define this as a plug-in
-DEFINE_ANOTHER_FWK_MODULE(BeamSpotFromDB);
+DEFINE_FWK_MODULE(BeamSpotFromDB);
