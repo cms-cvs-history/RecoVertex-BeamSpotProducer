@@ -20,6 +20,12 @@ BeamSpotOnlineProducer::BeamSpotOnlineProducer(const ParameterSet& iconf)
   scalertag_ = iconf.getParameter<InputTag>("label");
   changeFrame_ = iconf.getParameter<bool>("changeToCMSCoordinates");
 
+  theMaxR2 = iconf.getParameter<double>("maxRadius");
+  theMaxR2*=theMaxR2;
+  theMaxZ = iconf.getParameter<double>("maxZ");
+
+  theSetSigmaZ = iconf.getParameter<double>("setSigmaZ");
+
   produces<reco::BeamSpot>();
 
 } 
@@ -58,8 +64,12 @@ BeamSpotOnlineProducer::produce(Event& iEvent, const EventSetup& iSetup)
   matrix(2,2) = spotOnline.err_z()*spotOnline.err_z();
   matrix(3,3) = spotOnline.err_sigma_z()*spotOnline.err_sigma_z();
 
+  double sigmaZ = spotOnline.sigma_z();
+  if (theSetSigmaZ>0)
+    sigmaZ = theSetSigmaZ;
+
   aSpot = reco::BeamSpot( apoint,
-			  spotOnline.sigma_z(),
+			  sigmaZ,
 			  spotOnline.dxdz(),
 			  f* spotOnline.dydz(),
 			  spotOnline.width_x(),
@@ -72,15 +82,28 @@ BeamSpotOnlineProducer::produce(Event& iEvent, const EventSetup& iSetup)
   aSpot.setType( reco::BeamSpot::LHC ); // flag value from scalars
 
   // check if we have a valid beam spot fit result from online DQM
+  
+  bool fallBackToDB=false;
 
   if ( spotOnline.x() == 0 &&
        spotOnline.y() == 0 &&
        spotOnline.z() == 0 &&
        spotOnline.width_x() == 0 &&
-       spotOnline.width_y() == 0 ) {
-
-    //edm::LogInfo("RecoVertex/BeamSpotProducer") 
-    //<< "Online Beam Spot producer fall back to DB value " << "\n";
+       spotOnline.width_y() == 0 ) 
+    {
+      edm::LogWarning("BeamSpotFromDB") 
+	<< "Online Beam Spot producer falls back to DB value because the scaler values are zero ";
+      fallBackToDB=true;
+    }
+  double r2=spotOnline.x()*spotOnline.x() + spotOnline.y()*spotOnline.y();
+  if (fabs(spotOnline.z())>=theMaxZ || r2>=theMaxR2){
+    edm::LogError("BeamSpotFromDB") 
+      << "Online Beam Spot producer falls back to DB value because the scaler values are too big to be true :"
+      <<spotOnline.x()<<" "<<spotOnline.y()<<" "<<spotOnline.z();
+    fallBackToDB=true;
+  }
+      
+  if (fallBackToDB){
 
     edm::ESHandle< BeamSpotObjects > beamhandle;
     iSetup.get<BeamSpotObjectsRcd>().get(beamhandle);
