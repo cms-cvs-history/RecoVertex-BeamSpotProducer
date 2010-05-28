@@ -20,7 +20,7 @@ process.source = cms.Source("PoolSource",
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(5) #1500
+    input = cms.untracked.int32(-1) #1500
 )
 
 process.options = cms.untracked.PSet(
@@ -39,15 +39,11 @@ process.GlobalTag.globaltag = 'GR10_P_V5::All' #'GR_R_35X_V8::All'
 process.load("Configuration.StandardSequences.Geometry_cff")
 
 
-########## RE-FIT TRACKS
-process.load("RecoTracker.TrackProducer.TrackRefitters_cff")
-process.TrackRefitter.src = 'ALCARECOTkAlMinBias'
-
 ## reco PV
 process.load("Configuration.StandardSequences.Reconstruction_cff")
 process.load("RecoVertex.BeamSpotProducer.BeamSpot_cfi")
 process.load("RecoVertex.PrimaryVertexProducer.OfflinePrimaryVertices_cfi")
-process.offlinePrimaryVertices.TrackLabel = cms.InputTag("TrackRefitter") 
+process.offlinePrimaryVertices.TrackLabel = cms.InputTag("ALCARECOTkAlMinBias") 
 
 #### remove beam scraping events
 process.noScraping= cms.EDFilter("FilterOutScraping",
@@ -70,7 +66,7 @@ process.offlinePrimaryVertices.TkClusParameters.TkGapClusParameters.zSeparation 
 
 
 #######################
-process.alcaBeamSpotProducer.BeamFitter.TrackCollection = 'TrackRefitter'
+process.alcaBeamSpotProducer.BeamFitter.TrackCollection = 'ALCARECOTkAlMinBias'
 process.alcaBeamSpotProducer.BeamFitter.MinimumTotalLayers = 6
 process.alcaBeamSpotProducer.BeamFitter.MinimumPixelLayers = -1
 process.alcaBeamSpotProducer.BeamFitter.MaximumNormChi2 = 10
@@ -92,7 +88,7 @@ process.alcaBeamSpotProducer.AlcaBeamSpotProducerParameters.resetEveryNLumi = 1
 
 process.p = cms.Path(process.hltLevel1GTSeed +
                      process.offlineBeamSpot +
-                     process.TrackRefitter +
+#                     process.TrackRefitter +
                      process.offlinePrimaryVertices+
 #                     process.noScraping +
                      process.alcaBeamSpotProducer)
