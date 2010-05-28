@@ -20,7 +20,7 @@ process.source = cms.Source("PoolSource",
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(-1) #1500
+    input = cms.untracked.int32(3000) #1500
 )
 
 process.options = cms.untracked.PSet(
@@ -85,6 +85,14 @@ process.alcaBeamSpotProducer.PVFitter.minNrVerticesForFit = 10
 # fit as function of lumi sections
 process.alcaBeamSpotProducer.AlcaBeamSpotProducerParameters.fitEveryNLumi = 1
 process.alcaBeamSpotProducer.AlcaBeamSpotProducerParameters.resetEveryNLumi = 1
+
+process.out = cms.OutputModule( "PoolOutputModule",
+                                fileName = cms.untracked.string( 'AlcaBeamSpot.root' ),
+                                outputCommands = cms.untracked.vstring("keep *")
+                              )
+
+
+process.e = cms.EndPath( process.out )
 
 process.p = cms.Path(process.hltLevel1GTSeed +
                      process.offlineBeamSpot +
