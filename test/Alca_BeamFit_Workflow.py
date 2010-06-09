@@ -2,25 +2,35 @@ import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("alcaBeamSpotWorkflow")
 # initialize MessageLogger
-process.load("FWCore.MessageLogger.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport  = cms.untracked.PSet(
-    reportEvery = cms.untracked.int32(1000000),
-)
+#process.load("FWCore.MessageLogger.MessageLogger_cfi")
+#MessageLogger = cms.Service("MessageLogger",
+#  cout = cms.untracked.PSet(
+#    threshold = cms.untracked.string('DEBUG')
+#  ),
+#  destinations = cms.untracked.vstring('cout')
+#)
+
+#process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000000)
 
 process.load("RecoVertex.BeamSpotProducer.AlcaBeamSpotProducer_cfi")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-    '/store/express/Commissioning10/StreamExpress/ALCARECO/v9/000/135/149/F053205D-8E5B-DF11-803D-000423D9997E.root',
-    '/store/express/Commissioning10/StreamExpress/ALCARECO/v9/000/135/149/F038B0BE-3A5B-DF11-B94E-000423D98750.root',
-    '/store/express/Commissioning10/StreamExpress/ALCARECO/v9/000/135/149/F03560AE-165B-DF11-AE55-0030486780EC.root',
-    '/store/express/Commissioning10/StreamExpress/ALCARECO/v9/000/135/149/F03169C7-935B-DF11-A59F-001D09F28D54.root',
-    '/store/express/Commissioning10/StreamExpress/ALCARECO/v9/000/135/149/EE15D8B9-1E5B-DF11-8205-003048D2BC30.root'
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0171/3A22D08D-456A-DF11-961F-001A92811734.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0171/083B6802-236C-DF11-8AC6-0026189437FE.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0170/E6D0589B-136A-DF11-9E90-002618943982.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0170/D098488B-276A-DF11-8069-003048678AF4.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0166/F466DD94-BF69-DF11-B9B8-00261894390A.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0166/F2A9245B-BC69-DF11-9C3F-0018F3D096E4.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0166/DED5E502-B969-DF11-AE8F-002618943964.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0166/563257AF-C169-DF11-865F-002618943907.root',
+'/store/data/Commissioning10/MinimumBias/ALCARECO/TkAlMinBias-May27thReReco_v1/0166/3056B847-C069-DF11-B0B0-003048679010.root'
+
     )
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(3000) #1500
+    input = cms.untracked.int32(500) #1500
 )
 
 process.options = cms.untracked.PSet(
@@ -54,12 +64,11 @@ process.noScraping= cms.EDFilter("FilterOutScraping",
 )
 
 
-process.MessageLogger.debugModules = ['AlcaBeamSpotProducer']
 
 ################### Primary Vertex
 process.offlinePrimaryVertices.PVSelParameters.maxDistanceToBeam = 2
 process.offlinePrimaryVertices.TkFilterParameters.maxNormalizedChi2 = 20
-process.offlinePrimaryVertices.TkFilterParameters.minSiliconLayersWithHits = 6
+process.offlinePrimaryVertices.TkFilterParameters.minSiliconLayersWithHits = 5
 process.offlinePrimaryVertices.TkFilterParameters.maxD0Significance = 100
 process.offlinePrimaryVertices.TkFilterParameters.minPixelLayersWithHits = 1
 process.offlinePrimaryVertices.TkClusParameters.TkGapClusParameters.zSeparation = 1
@@ -70,11 +79,10 @@ process.alcaBeamSpotProducer.BeamFitter.TrackCollection = 'ALCARECOTkAlMinBias'
 process.alcaBeamSpotProducer.BeamFitter.MinimumTotalLayers = 6
 process.alcaBeamSpotProducer.BeamFitter.MinimumPixelLayers = -1
 process.alcaBeamSpotProducer.BeamFitter.MaximumNormChi2 = 10
-process.alcaBeamSpotProducer.BeamFitter.MinimumInputTracks = 2
+process.alcaBeamSpotProducer.BeamFitter.MinimumInputTracks = 50
 process.alcaBeamSpotProducer.BeamFitter.MinimumPt = 1.0
 process.alcaBeamSpotProducer.BeamFitter.MaximumImpactParameter = 1.0
 process.alcaBeamSpotProducer.BeamFitter.TrackAlgorithm =  cms.untracked.vstring()
-process.alcaBeamSpotProducer.BeamFitter.InputBeamWidth = -1 # 0.0400
 #process.alcaBeamSpotProducer.BeamFitter.Debug = True
 
 process.alcaBeamSpotProducer.PVFitter.Apply3DFit = True
