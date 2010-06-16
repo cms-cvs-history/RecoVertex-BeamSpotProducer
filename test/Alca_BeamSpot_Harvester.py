@@ -8,13 +8,22 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process('HARVESTING')
 
 # initialize MessageLogger
-#process.load("FWCore.MessageLogger.MessageLogger_cfi")
-#MessageLogger = cms.Service("MessageLogger",
-#  cout = cms.untracked.PSet(
-#    threshold = cms.untracked.string('DEBUG')
-#  ),
-#  destinations = cms.untracked.vstring('cout')
-#)
+process.load("FWCore.MessageLogger.MessageLogger_cfi")
+process.MessageLogger.categories = ["AlcaBeamSpotHarvester"]
+process.MessageLogger.cerr = cms.untracked.PSet(placeholder = cms.untracked.bool(True))
+process.MessageLogger.cout = cms.untracked.PSet(
+    threshold = cms.untracked.string('INFO'),
+    default = cms.untracked.PSet(
+       limit = cms.untracked.int32(0)
+    ),
+    AlcaBeamSpotHarvester = cms.untracked.PSet(
+        #reportEvery = cms.untracked.int32(100) # every 1000th only
+	limit = cms.untracked.int32(-1)
+    )
+)
+#process.MessageLogger.statistics.append('cout')
+
+process.load("RecoVertex.BeamSpotProducer.AlcaBeamSpotHarvester_cff")
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -27,7 +36,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.EventContent.EventContent_cff')
 
 process.configurationMetadata = cms.untracked.PSet(
-    version = cms.untracked.string('$Revision: 1.172 $'),
+    version = cms.untracked.string('$Revision: 1.1 $'),
     annotation = cms.untracked.string('step3 nevts:1'),
     name = cms.untracked.string('PyReleaseValidation')
 )
@@ -77,10 +86,7 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
 
 
 
-process.bsHarv = cms.EDAnalyzer("AlcaBeamSpotHarvester")
-
-
-process.alcaHarvesting = cms.Path(process.bsHarv)
+process.alcaHarvesting = cms.Path(process.alcaBeamSpotHarvester)
 
 # Schedule definition
 process.schedule = cms.Schedule(process.alcaHarvesting)

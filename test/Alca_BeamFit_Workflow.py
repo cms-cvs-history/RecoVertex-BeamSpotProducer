@@ -2,17 +2,22 @@ import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("alcaBeamSpotWorkflow")
 # initialize MessageLogger
-#process.load("FWCore.MessageLogger.MessageLogger_cfi")
-#MessageLogger = cms.Service("MessageLogger",
-#  cout = cms.untracked.PSet(
-#    threshold = cms.untracked.string('DEBUG')
-#  ),
-#  destinations = cms.untracked.vstring('cout')
-#)
+process.load("FWCore.MessageLogger.MessageLogger_cfi")
+process.MessageLogger.categories = ["AlcaBeamSpotProducer"]
+process.MessageLogger.cerr = cms.untracked.PSet(placeholder = cms.untracked.bool(True))
+process.MessageLogger.cout = cms.untracked.PSet(
+    threshold = cms.untracked.string('INFO'),
+    default = cms.untracked.PSet(
+       limit = cms.untracked.int32(0)
+    ),
+    AlcaBeamSpotProducer = cms.untracked.PSet(
+        #reportEvery = cms.untracked.int32(100) # every 1000th only
+	limit = cms.untracked.int32(0)
+    )
+)
+#process.MessageLogger.statistics.append('cout')
 
-#process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000000)
-
-process.load("RecoVertex.BeamSpotProducer.AlcaBeamSpotProducer_cfi")
+process.load("RecoVertex.BeamSpotProducer.AlcaBeamSpotProducer_cff")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
