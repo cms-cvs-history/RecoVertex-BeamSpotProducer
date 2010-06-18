@@ -37,7 +37,7 @@ process.maxLuminosityBlocks=cms.untracked.PSet(
      input=cms.untracked.int32(25)
 )
  
-process.beamspot = cms.EDProducer("BeamSpotFromDB")
+process.beamspot = cms.EDProducer("AlcaBeamSpotFromDB")
 
 
 process.p = cms.Path(process.beamspot)
