@@ -29,7 +29,7 @@ process.source = cms.Source("EmptySource",
                             )
 
 process.out = cms.OutputModule( "PoolOutputModule",
-                                fileName = cms.untracked.string( 'AlcaBeamSpot.root' ),
+                                fileName = cms.untracked.string( 'AlcaBeamSpotDB.root' ),
                                 outputCommands = cms.untracked.vstring("keep *")
                                 )
 

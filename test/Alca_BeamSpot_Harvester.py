@@ -18,11 +18,11 @@ process.MessageLogger.cout = cms.untracked.PSet(
     ),
     AlcaBeamSpotHarvester = cms.untracked.PSet(
         #reportEvery = cms.untracked.int32(100) # every 1000th only
-	limit = cms.untracked.int32(-1)
+	limit = cms.untracked.int32(0)
     ),
     AlcaBeamSpotManager = cms.untracked.PSet(
         #reportEvery = cms.untracked.int32(100) # every 1000th only
-	limit = cms.untracked.int32(-1)
+	limit = cms.untracked.int32(0)
     )
 )
 #process.MessageLogger.statistics.append('cout')
@@ -40,7 +40,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.EventContent.EventContent_cff')
 
 process.configurationMetadata = cms.untracked.PSet(
-    version = cms.untracked.string('$Revision: 1.2 $'),
+    version = cms.untracked.string('$Revision: 1.3 $'),
     annotation = cms.untracked.string('step3 nevts:1'),
     name = cms.untracked.string('PyReleaseValidation')
 )
@@ -85,7 +85,8 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
     record = cms.string('BeamSpotObjectsRcd'),
     tag = cms.string('TestLSBasedBS') )),
     loadBlobStreamer = cms.untracked.bool(False),
-    timetype   = cms.untracked.string('lumiid')
+#    timetype   = cms.untracked.string('lumiid')
+    timetype   = cms.untracked.string('runnumber')
 )
 
 

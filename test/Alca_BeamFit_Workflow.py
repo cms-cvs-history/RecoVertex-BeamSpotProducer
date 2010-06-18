@@ -12,7 +12,7 @@ process.MessageLogger.cout = cms.untracked.PSet(
     ),
     AlcaBeamSpotProducer = cms.untracked.PSet(
         #reportEvery = cms.untracked.int32(100) # every 1000th only
-	limit = cms.untracked.int32(-1)
+	limit = cms.untracked.int32(0)
     )
 )
 #process.MessageLogger.statistics.append('cout')
@@ -50,7 +50,7 @@ process.hltLevel1GTSeed.L1SeedsLogicalExpression = cms.string('0 AND ( 40 OR 41 
 ##
 process.load("Configuration.StandardSequences.MagneticField_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
-process.GlobalTag.globaltag = 'GR10_P_V5::All' #'GR_R_35X_V8::All'
+process.GlobalTag.globaltag = 'GR10_P_V6::All' #'GR_R_35X_V8::All'
 process.load("Configuration.StandardSequences.Geometry_cff")
 
 
