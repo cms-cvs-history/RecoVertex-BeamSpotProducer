@@ -9,7 +9,7 @@ process = cms.Process('HARVESTING')
 
 # initialize MessageLogger
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
-process.MessageLogger.categories = ["AlcaBeamSpotHarvester"]
+process.MessageLogger.categories = ["AlcaBeamSpotHarvester","AlcaBeamSpotManager"]
 process.MessageLogger.cerr = cms.untracked.PSet(placeholder = cms.untracked.bool(True))
 process.MessageLogger.cout = cms.untracked.PSet(
     threshold = cms.untracked.string('INFO'),
@@ -17,6 +17,10 @@ process.MessageLogger.cout = cms.untracked.PSet(
        limit = cms.untracked.int32(0)
     ),
     AlcaBeamSpotHarvester = cms.untracked.PSet(
+        #reportEvery = cms.untracked.int32(100) # every 1000th only
+	limit = cms.untracked.int32(-1)
+    ),
+    AlcaBeamSpotManager = cms.untracked.PSet(
         #reportEvery = cms.untracked.int32(100) # every 1000th only
 	limit = cms.untracked.int32(-1)
     )
@@ -36,7 +40,7 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.load('Configuration.EventContent.EventContent_cff')
 
 process.configurationMetadata = cms.untracked.PSet(
-    version = cms.untracked.string('$Revision: 1.1 $'),
+    version = cms.untracked.string('$Revision: 1.2 $'),
     annotation = cms.untracked.string('step3 nevts:1'),
     name = cms.untracked.string('PyReleaseValidation')
 )

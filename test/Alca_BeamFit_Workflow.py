@@ -12,7 +12,7 @@ process.MessageLogger.cout = cms.untracked.PSet(
     ),
     AlcaBeamSpotProducer = cms.untracked.PSet(
         #reportEvery = cms.untracked.int32(100) # every 1000th only
-	limit = cms.untracked.int32(0)
+	limit = cms.untracked.int32(-1)
     )
 )
 #process.MessageLogger.statistics.append('cout')
@@ -35,7 +35,7 @@ process.source = cms.Source("PoolSource",
 )
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(500) #1500
+    input = cms.untracked.int32(200000) #1500
 )
 
 process.options = cms.untracked.PSet(
