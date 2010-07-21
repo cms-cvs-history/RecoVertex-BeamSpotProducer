@@ -7,7 +7,7 @@
  author: Francisco Yumiceva, Fermilab (yumiceva@fnal.gov)
          Geng-Yuan Jeng, UC Riverside (Geng-Yuan.Jeng@cern.ch)
 
- version $Id: BeamSpotAnalyzer.cc,v 1.26 2010/05/28 22:53:01 yumiceva Exp $
+ version $Id: BeamSpotAnalyzer.cc,v 1.27 2010/06/18 19:36:25 yumiceva Exp $
 
 ________________________________________________________________**/
 
@@ -20,6 +20,7 @@ ________________________________________________________________**/
 #include "RecoVertex/BeamSpotProducer/interface/BSFitter.h"
 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
+#include "FWCore/Framework/interface/LuminosityBlock.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 
 #include "TMath.h"
