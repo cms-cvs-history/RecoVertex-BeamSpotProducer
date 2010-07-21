@@ -47,8 +47,8 @@ except:
     try:
         import simplejson as json
     except:
-        error = "Please set a crab environment in order to get the proper JSON lib"
-        exit(error)
+        print "Please set a crab environment in order to get the proper JSON lib"
+        sys.exit(1)
 
 #####################################################################################
 # General functions
@@ -158,7 +158,7 @@ def getListOfRunsAndLumiFromRR(lastRun=-1):
             time.sleep(5)
         if tries==10:
             error = "Run registry unaccessible.....exiting now"
-            exit(error)
+            sys.exit(error)
     
 
     listOfRuns=[]
