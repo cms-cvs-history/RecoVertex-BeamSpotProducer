@@ -7,7 +7,7 @@
    author: Francisco Yumiceva, Fermilab (yumiceva@fnal.gov)
            Geng-Yuan Jeng, UC Riverside (Geng-Yuan.Jeng@cern.ch)
  
-   version $Id: BeamFitter.cc,v 1.70 2010/07/15 04:21:45 jengbou Exp $
+   version $Id: BeamFitter.cc,v 1.71 2010/07/21 20:52:35 jengbou Exp $
 
 ________________________________________________________________**/
 
@@ -31,12 +31,12 @@ ________________________________________________________________**/
 // ----------------------------------------------------------------------
 // Useful function:
 // ----------------------------------------------------------------------
-const char * BeamFitter::formatBTime(const std::time_t & t)  {
-  struct std::tm * ptm;
-  ptm = gmtime(&t);
-  static char ts[] = "yyyy.mn.dd hh:mm:ss zzz ";
-  strftime(ts,sizeof(ts),"%Y.%m.%d %H:%M:%S %Z",ptm);
-  return ts;
+void BeamFitter::formatBTime(char (&ts)[25],const std::time_t & t)  {
+  strftime(ts,sizeof(ts),"%Y.%m.%d %H:%M:%S %Z",gmtime(&t));
+#ifdef STRIP_TRAILING_BLANKS_IN_TIMEZONE	 
+  unsigned int b = strlen(ts);	 
+  while (ts[--b] == ' ') {ts[b] = 0;}	 
+#endif
 }
 
 BeamFitter::BeamFitter(const edm::ParameterSet& iConfig): fPVTree_(0)
@@ -399,10 +399,8 @@ bool BeamFitter::runPVandTrkFitter() {
 
     // First run PV fitter
     if ( MyPVFitter->IsFitPerBunchCrossing() ){
-      const char* fbeginTime = formatBTime(freftime[0]);
-      sprintf(fbeginTimeOfFit,"%s",fbeginTime);
-      const char* fendTime = formatBTime(freftime[1]);
-      sprintf(fendTimeOfFit,"%s",fendTime);
+      formatBTime(fbeginTimeOfFit,freftime[0]);
+      formatBTime(fendTimeOfFit,freftime[1]);
 
       edm::LogInfo("BeamFitter") << " [BeamFitterBxDebugTime] freftime[0] = " << freftime[0]
 				 << "; address =  " << &freftime[0]
@@ -493,10 +491,8 @@ bool BeamFitter::runPVandTrkFitter() {
 }
 
 bool BeamFitter::runFitterNoTxt() {
-  const char* fbeginTime = formatBTime(freftime[0]);
-  sprintf(fbeginTimeOfFit,"%s",fbeginTime);
-  const char* fendTime = formatBTime(freftime[1]);
-  sprintf(fendTimeOfFit,"%s",fendTime);
+  formatBTime(fbeginTimeOfFit,freftime[0]);
+  formatBTime(fendTimeOfFit,freftime[1]);
 
   edm::LogInfo("BeamFitter") << " [BeamFitterDebugTime] freftime[0] = " << freftime[0]
 			     << "; address =  " << &freftime[0]
