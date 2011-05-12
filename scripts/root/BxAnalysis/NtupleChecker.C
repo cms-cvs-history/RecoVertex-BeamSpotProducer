@@ -2,7 +2,7 @@
 //  Authors: Lorenzo Uplegger  : uplegger@cern.ch
 //           Sushil s. Chauhan : sushil@fnal.gov
 //
-//   Last modified: 30 October 2010
+//   Last modified: 30 July 2010
 //------------------------------------------------------
 // This script read the pv  ntuples from Beam Spot 
 // area and make plots for each bx using pv Fitter.
@@ -12,8 +12,7 @@
 
 #include "RecoVertex/BeamSpotProducer/interface/BeamSpotTreeData.h"
 #include "RecoVertex/BeamSpotProducer/interface/FcnBeamSpotFitPV.h"
-#include "BSFitData.h"
-
+#include "RecoVertex/BeamSpotProducer/interface/BSFitData.h"
 #include "TFitterMinuit.h"
 #include "Minuit2/FCNBase.h"
 #include <TTree.h>
@@ -55,21 +54,22 @@ void NtupleChecker(){
   //----------------------------------------------//
   //                Input parameters              //
   //----------------------------------------------// 
-  Int_t beginRunNumber = 162924;           //give -1 if do not want to set lower run limit
-  Int_t endRunNumber   = 162930;               //give -1 if do not want to set upper run limit
+  Int_t beginRunNumber = 141956;           //give -1 if do not want to set lower run limit
+  Int_t endRunNumber   = -1;               //give -1 if do not want to set upper run limit
 
   Int_t beginLSNumber  = -1;
   Int_t endLSNumber    = -1;
 
-  Int_t FitNLumi       = 100;
+  Int_t FitNLumi       = 30;
 
-  TString OutPutFileName ="BxAnalysis_Fill_1718.root";
-  TString OutPutDir      ="/afs/cern.ch/cms/CAF/CMSCOMM/COMM_BSPOT/burkett/BxNtuples/";
+  TString OutPutFileName ="BxAnalysis.root";
+  TString OutPutDir      ="/afs/cern.ch/user/s/schauhan/scratch0/BeamSpot_2010/CMSSW_3_6_1_patch4/src/RecoVertex/BeamSpotProducer/scripts/BxAnalysisScripts"; 
+
   //---------------------------------------------//
 
 
 
-  //save few things to ouput log file 
+
   outdata.open("LogFile.dat");
   cout<<"-----------Step - 1 : Storing Info from Root file to a vector-----------------------"<<endl;
   outdata<<" -----------Step - 1 : Storing Info from Root file to a vector-----------------------"<<endl;
@@ -81,8 +81,7 @@ void NtupleChecker(){
   FitDone_Results_.clear();
  
   //set direcotry structure
-  //TString path = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_BSPOT/BxNtuples/";
-  TString path = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_BSPOT/burkett/BxNtuples/";
+  TString path = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_BSPOT/BxNtuples/";
   TSystemDirectory sourceDir("hi",path); 
   TList* fileList = sourceDir.GetListOfFiles(); 
   TIter next(fileList);
@@ -174,13 +173,10 @@ outdata<<"-----------Step - 2 : Now Running the PVFitter for each Bunch Xrossing
 
 
  for( std::map<int, std::map< int, std::vector<BeamSpotFitPVData> > >::iterator RunIt=StoreRunLSPVdata_.begin(); RunIt!=StoreRunLSPVdata_.end(); ++RunIt)
-     {  
-        if(StoreRunLSPVdata_.size()==0) continue;
- 
-        if(LastRun==0)LastRun=RunIt->first;
+     {  if(LastRun==0)LastRun=RunIt->first;
         LumiCounter=0;    
         RunNumber=RunIt->first;
-          
+    
         std::map< int, std::vector<BeamSpotFitPVData> >::iterator LastLumiIt;
 
     for( std::map< int, std::vector<BeamSpotFitPVData> >::iterator LumiIt=RunIt->second.begin(); LumiIt!=RunIt->second.end(); ++LumiIt)
@@ -218,10 +214,10 @@ outdata<<"-----------Step - 2 : Now Running the PVFitter for each Bunch Xrossing
               if(runPVFitter(bxMap_,Fit_Done,tmpLumiCounter)){
 
                 //store the run : LS range as Tstring
-                Char_t RunLSRange[300];
+                Char_t RunLSRange[254];
                 sprintf(RunLSRange,"%d%s%d%s%d%s",RunNumber,":",Lumi_lo," - ",Lumi_up,"\0");
                 TString RunLSRange_(RunLSRange);
-                FitDone_RunLumiRange_[Fit_Done]=RunLSRange_;
+                FitDone_RunLumiRange_[Fit_Done]= RunLSRange_;
 
                }
 
@@ -265,22 +261,18 @@ void  PlotHistoBX(TString ODN, TString OFN){
 
 
   Int_t PointsToPlot, bunchN,bunchN_previous;
-  bunchN=0;
   PointsToPlot = FitDone_Results_.size();
   //cout<<"Total Fit Points ="<<PointsToPlot<<endl;
 
  //get the number of bunches
  bunchN_previous=0; 
  for(std::map<int, map<int, std::vector<BSFitData> > >::iterator tmpIt=FitDone_Results_.begin();tmpIt!=FitDone_Results_.end();++tmpIt){
- 
-  if((tmpIt->second).size()==0) continue; 
- 
+  
   bunchN = max((Int_t)(tmpIt->second).size(), bunchN_previous);
   if(bunchN > bunchN_previous)tmpBxIt=(tmpIt->second).begin();
   bunchN_previous=(tmpIt->second).size();
   }
   
-
 
  TH1F* h_X_bx_[bunchN];
  TH1F* h_Y_bx_[bunchN];
@@ -362,11 +354,10 @@ void  PlotHistoBX(TString ODN, TString OFN){
   map<int, map<int, float > >::iterator bxnpvIt = bxMapPVSize_.begin(); 
     
 
+
   int bxfit=0;
 
   for( std::map<int, map<int, std::vector<BSFitData> > >::iterator FitIt=FitDone_Results_.begin(); FitIt!=FitDone_Results_.end(); ++FitIt){
-               
-            if(FitDone_Results_.size()==0) continue; 
             bxfit=0;
 
             //this for bx-nPV map
@@ -431,6 +422,7 @@ void  PlotHistoBX(TString ODN, TString OFN){
        bxnpvIt++;
 
     }//Loop over each fit
+
 
 
  TDirectory *X0 = f1.mkdir("X0");
@@ -538,8 +530,6 @@ void DefineHistStyle(TH1F *h1, int bx){
 
  h1->SetLineStyle(1);
  if(bx>10)h1->SetLineStyle(bx-9);
-
-
  bx=0;
 
 }
