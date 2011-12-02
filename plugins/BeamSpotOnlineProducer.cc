@@ -19,7 +19,8 @@ using namespace edm;
 BeamSpotOnlineProducer::BeamSpotOnlineProducer(const ParameterSet& iconf)
 {
   
-  scalertag_ = iconf.getParameter<InputTag>("label");
+  scalertag_ = iconf.getParameter<InputTag>("src");
+
   changeFrame_ = iconf.getParameter<bool>("changeToCMSCoordinates");
 
   theMaxR2 = iconf.getParameter<double>("maxRadius");
